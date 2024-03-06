@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const MONGODB_URI = 'mongodb://localhost:27017/money_counter';
+const MONGODB_URI = 'mongodb+srv://admin:admin@counter.4z1qwqs.mongodb.net/?retryWrites=true&w=majority&appName=Counter';
 
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 const Counter = mongoose.model('Counter', { value: Number });
