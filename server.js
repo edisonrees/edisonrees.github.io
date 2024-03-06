@@ -1,38 +1,56 @@
-
 const express = require('express');
-const mongoose = require('mongoose');
+const redis = require('redis');
+const bodyParser = require('body-parser');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const MONGODB_URI = 'mongodb+srv://admin:admin@counter.4z1qwqs.mongodb.net/?retryWrites=true&w=majority&appName=Counter';
 
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-const Counter = mongoose.model('Counter', { value: Number });
-
-app.use(express.json());
-
-app.get('/counter', async (req, res) => {
-  try {
-    const counter = await Counter.findOne();
-    res.json(counter);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+// Create a Redis client
+const redisClient = redis.createClient({
+  url: 'redis://red-cnk33j8l6cac73a23oqg:6379'
 });
 
-app.post('/counter', async (req, res) => {
-  try {
-    let counter = await Counter.findOne();
-    if (!counter) {
-      counter = new Counter({ value: req.body.value });
-    } else {
-      counter.value = req.body.value;
+// Middleware to parse JSON request bodies
+app.use(bodyParser.json());
+
+// Route to handle counter updates
+app.post('/counter', (req, res) => {
+  const { value } = req.body;
+
+  // Store the new counter value in Redis
+  redisClient.set('counter', value, (err, reply) => {
+    if (err) {
+      console.error('Error setting counter in Redis:', err);
+      return res.status(500).json({ error: 'Internal Server Error' });
     }
-    await counter.save();
-    res.status(201).json(counter);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
+    
+    // If the counter is zero, set it to the last entry in Redis
+    if (value == 0) {
+      redisClient.get('lastEntry', (err, lastEntry) => {
+        if (err) {
+          console.error('Error getting last entry from Redis:', err);
+          return res.status(500).json({ error: 'Internal Server Error' });
+        }
+        // Set counter to the last entry
+        redisClient.set('counter', lastEntry, (err, reply) => {
+          if (err) {
+            console.error('Error setting counter to last entry in Redis:', err);
+            return res.status(500).json({ error: 'Internal Server Error' });
+          }
+          return res.status(200).json({ message: 'Counter updated successfully' });
+        });
+      });
+    } else {
+      // Store the new value as the last entry
+      redisClient.set('lastEntry', value, (err, reply) => {
+        if (err) {
+          console.error('Error setting last entry in Redis:', err);
+          return res.status(500).json({ error: 'Internal Server Error' });
+        }
+        return res.status(200).json({ message: 'Counter updated successfully' });
+      });
+    }
+  });
 });
 
 app.listen(PORT, () => {
