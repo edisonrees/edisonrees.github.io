@@ -3,48 +3,65 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Money Counter</title>
+<title>Fancy Money Counter</title>
 <style>
   body {
     font-family: Arial, sans-serif;
-    background-color: white;
+    background-color: #f0f0f0;
     text-align: center;
+    margin: 0;
+    padding: 0;
   }
   #counter {
-    font-size: 48px;
+    font-size: 72px;
     margin-top: 50px;
+    color: #2ecc71;
   }
   #textbox {
     margin-top: 20px;
   }
   input[type="text"] {
     width: 200px;
-    height: 30px;
-    font-size: 16px;
+    height: 40px;
+    font-size: 20px;
+    border-radius: 5px;
+    border: 2px solid #3498db;
+    padding: 5px;
   }
   button {
     margin-top: 10px;
-    width: 100px;
-    height: 40px;
-    font-size: 16px;
+    width: 120px;
+    height: 50px;
+    font-size: 18px;
     cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    transition: background-color 0.3s;
   }
   #addBtn {
-    background-color: blue;
+    background-color: #3498db;
     color: white;
+    margin-right: 10px;
+  }
+  #addBtn:hover {
+    background-color: #2980b9;
   }
   #subtractBtn {
-    background-color: blue;
+    background-color: #e74c3c;
     color: white;
+  }
+  #subtractBtn:hover {
+    background-color: #c0392b;
   }
 </style>
 </head>
 <body>
 <div id="counter">0</div>
 <div id="textbox">
-  <input type="text" id="amountInput" placeholder="Enter amount">
-  <button id="addBtn">+</button>
-  <button id="subtractBtn">-</button>
+  <input type="number" id="amountInput" placeholder="Enter amount">
+  <button id="addBtn">Add</button>
+  <button id="subtractBtn">Subtract</button>
 </div>
 
 <script>
@@ -53,7 +70,7 @@
 
   function addToCounter(value) {
     counter += value;
-    document.getElementById('counter').innerText = counter;
+    document.getElementById('counter').innerText = counter.toLocaleString('en-US', { style: 'currency', currency: 'EUR' });
   }
 
   function startCounter() {
