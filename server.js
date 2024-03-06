@@ -1,7 +1,4 @@
-mkdir money-counter-server
-cd money-counter-server
-npm init -y
-npm install express mongoose
+
 const express = require('express');
 const mongoose = require('mongoose');
 
