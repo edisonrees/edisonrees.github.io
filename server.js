@@ -22,7 +22,7 @@ app.get('/counter', async (req, res) => {
 app.post('/increment', async (req, res) => {
     try {
         let counterValue = await readCounterFromFile();
-        counterValue = parseInt(counterValue) + 312;
+        counterValue = parseInt(counterValue) + 212;
         await writeCounterToFile(counterValue);
         res.json({ value: counterValue });
     } catch (error) {
