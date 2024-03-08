@@ -55,10 +55,6 @@
   #subtractBtn:hover {
     background-color: #c0392b;
   }
-  #subtractBtn {
-    background-color: #FFFFFF;
-    color: red;
-  }
 </style>
 </head>
 <body>
@@ -67,6 +63,7 @@
   <input type="number" id="amountInput" placeholder="Enter amount">
   <button id="addBtn">Add - </button>
   <button id="subtractBtn">Subtract -</button>
+    <button id="killbtn">KILL SERVER</button>
 </div>
 
 <script>
@@ -101,8 +98,7 @@
       addToCounter(-amount);
     }
   });
-<button onClick="window.location.reload();">KILL SERVER</button>
-});
+  
 
   startCounter();
 </script>
