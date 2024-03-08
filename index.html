@@ -1,3 +1,4 @@
+<button onClick="window.location.reload();">Refresh Page</button>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,6 +55,13 @@
   #subtractBtn:hover {
     background-color: #c0392b;
   }
+  #subtractBtn {
+    background-color: #FFFFFF;
+    color: red;
+  }
+  #killbtn:hover {
+    background-color: #FF0000;
+  }
 </style>
 </head>
 <body>
@@ -97,7 +105,8 @@
       addToCounter(-amount);
     }
   });
-<button onclick="self.close()">KILL SERVER</button>
+<button onClick="window.location.reload();">KILL SERVER</button>
+
   });
 
   startCounter();
