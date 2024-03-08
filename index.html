@@ -1,4 +1,4 @@
-<button onClick="window.location.reload();">Refresh Page</button>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -91,7 +91,9 @@
       addToCounter(amount);
     }
   });
-
+<button onClick="window.location.reload();">Refresh Page</button>
+  }
+  });
   document.getElementById('subtractBtn').addEventListener('click', function() {
     let amount = parseInt(document.getElementById('amountInput').value);
     if (!isNaN(amount)) {
