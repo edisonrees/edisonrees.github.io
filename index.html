@@ -58,6 +58,15 @@
     background-color: #e74c3c;
     color: white;
   }
+
+ #killBtn {
+    background-color: #3498db;
+    color: white;
+    margin-right: 20px;
+  }
+  #killBtn:hover {
+    background-color: #2980b9;
+  }
  
 </style>
 </head>
@@ -101,7 +110,10 @@
       addToCounter(-amount);
     }
   });
-
+  document.getElementById('killBtn').addEventListener('click', function() {
+  
+      addToCounter(-counter);
+    });
   startCounter();
 </script>
 </body>
