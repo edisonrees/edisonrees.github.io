@@ -112,8 +112,9 @@
     }
   });
   document.getElementById('killBtn').addEventListener('click', function() {
-  reload()
-      addToCounter()
+     addToCounter(-counter)
+    reload()
+  
     });
   startCounter();
 </script>
